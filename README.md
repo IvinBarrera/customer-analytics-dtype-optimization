@@ -20,9 +20,12 @@ Analyzed each column's data type and applied the most efficient storage format:
 | `object` → `category` (nominal) | `gender`, `education_level`, `major_discipline`, `enrolled_university`, `company_type` | Repeated string values |
 | `object` → `category` (ordered) | `experience`, `company_size`, `last_new_job`, `city` | Natural order exists |
 
+### Looking at the dataset
+The first thing i do is to use info, describe and valuecounts so i can know which way the data is distributed at first sight
+
 ### Notable challenge: ordering `city`
 
-The city codes (`city_1`, `city_10`, `city_100`...) sort lexicographically by default, not numerically. Instead of stripping and re-appending the prefix, I generated the correct order directly:
+The city codes (`city_1`, `city_10`, `city_100`...) do not sort numerically. Instead of stripping and re-appending the prefix, I generated the correct order directly, how did i came up to this conclusion of knowing the range of numbers needed? what i did was checking the size of the column with .info so i knew what was the number of possible categories the column takes, i double checked with value_counts to see if there was any attypical or error in the column :
 
 ```python
 ordered_cats = ["city_" + str(i) for i in range(1, 124)]
